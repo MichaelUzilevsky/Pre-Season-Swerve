@@ -12,14 +12,29 @@ import utils.Side;
 
 public class Chassis extends SubsystemBase {
   private Modul top_right, top_left, bottom_right, bottom_left;
+  private Modul[] moduls;
 
   /** Creates a new Chassis. */
   public Chassis() {
-    
+    moduls = new Modul[4];
     this.top_right = new Modul(Side.TOP_RIGHT);
     this.bottom_right = new Modul(Side.BOTTOM_RIGHT);
     this.top_left = new Modul(Side.TOP_LEFT);
     this.bottom_left = new Modul(Side.BOTTOM_LEFT);
+
+    moduls[0] = top_left;
+    moduls[1] = top_right;
+    moduls[2] = bottom_left;
+    moduls[3] = bottom_right;
+
+    configCoders();
+
+  }
+
+  public void configCoders() {
+    for (Modul m : moduls) {
+      m.getCanCoder().setPositionToAbsolute();
+    }
   }
 
   @Override

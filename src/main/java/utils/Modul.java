@@ -35,8 +35,32 @@ public class Modul {
                 break;
 
         }
-        move = new TalonFX(move_id);
-        turn = new TalonFX(turn_id);
-        canCoder = new CANCoder(canCoder_id);
+        setMove(new TalonFX(move_id));
+        setTurn(new TalonFX(turn_id));
+        setCanCoder(new CANCoder(canCoder_id));
+    }
+
+    public CANCoder getCanCoder() {
+        return canCoder;
+    }
+
+    public void setCanCoder(CANCoder canCoder) {
+        this.canCoder = canCoder;
+    }
+
+    public TalonFX getTurn() {
+        return turn;
+    }
+
+    public void setTurn(TalonFX turn) {
+        this.turn = turn;
+    }
+
+    public TalonFX getMove() {
+        return move;
+    }
+
+    public void setMove(TalonFX move) {
+        this.move = move;
     }
 }
