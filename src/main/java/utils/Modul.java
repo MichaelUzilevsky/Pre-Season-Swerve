@@ -10,28 +10,28 @@ public class Modul {
     private CANCoder canCoder;
     private int move_id, turn_id, canCoder_id;
 
-    public Modul(Side side){
-        
-        switch (side){
-            case TOP_LEFT: 
-                move_id = Constants.TOP_LEFT_MOVE;
-                turn_id = Constants.TOP_LEFT_TURN;
-                canCoder_id = Constants.TOP_LEFT_CODER;
+    public Modul(Side side) {
+
+        switch (side) {
+            case FRONT_LEFT:
+                move_id = Constants.FRONT_LEFT_MOVE;
+                turn_id = Constants.FRONT_LEFT_TURN;
+                canCoder_id = Constants.FRONT_LEFT_CODER;
                 break;
-            case TOP_RIGHT:
-                move_id = Constants.TOP_RIGHT_MOVE;
-                turn_id = Constants.TOP_RIGHT_TURN;
-                canCoder_id = Constants.TOP_RIGHT_CODER;
+            case FRONT_RIGHT:
+                move_id = Constants.FRONT_RIGHT_MOVE;
+                turn_id = Constants.FRONT_RIGHT_TURN;
+                canCoder_id = Constants.FRONT_RIGHT_CODER;
                 break;
-            case BOTTOM_RIGHT:
-                move_id = Constants.BOTTOM_RIGHT_MOVE;
-                turn_id = Constants.BOTTOM_RIGHT_TURN;
-                canCoder_id = Constants.BOTTOM_RIGHT_CODER;
+            case BACK_RIGHT:
+                move_id = Constants.BACK_RIGHT_MOVE;
+                turn_id = Constants.BACK_RIGHT_TURN;
+                canCoder_id = Constants.BACK_RIGHT_CODER;
                 break;
-            case BOTTOM_LEFT: 
-                move_id = Constants.BOTTOM_LEFT_MOVE;
-                turn_id = Constants.BOTTOM_LEFT_TURN;
-                canCoder_id = Constants.BOTTOM_LEFT_CODER;
+            case BACK_LEFT:
+                move_id = Constants.BACK_LEFT_MOVE;
+                turn_id = Constants.BACK_LEFT_TURN;
+                canCoder_id = Constants.BACK_LEFT_CODER;
                 break;
 
         }
