@@ -39,6 +39,7 @@ public final class Constants {
     public final static int BACK_RIGHT_CODER = -1;
     // public static final int BACK_RIGHT_TURN = 0;
 
+    // Locations for the swerve drive modules relative to the robot center.
     public final static int FRONT_RIGHT_LOCATION_X = 0;
     public final static int FRONT_RIGHT_LOCATION_Y = 0;
     public final static int FRONT_LEFT_LOCATION_X = 0;
