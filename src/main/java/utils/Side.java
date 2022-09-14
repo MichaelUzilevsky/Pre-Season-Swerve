@@ -1,5 +1,6 @@
 package utils;
 
 public enum Side {
-    TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+    FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT
+
 }
