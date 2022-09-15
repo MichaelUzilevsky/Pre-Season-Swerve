@@ -1,16 +1,18 @@
 package utils;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 
-public class Modul {
+public class Module {
     private TalonFX move, turn;
     private CANCoder canCoder;
     private int move_id, turn_id, canCoder_id;
 
-    public Modul(Side side) {
+    public Module(Side side) {
 
         switch (side) {
             case FRONT_LEFT:
@@ -38,6 +40,8 @@ public class Modul {
         setMove(new TalonFX(move_id));
         setTurn(new TalonFX(turn_id));
         setCanCoder(new CANCoder(canCoder_id));
+
+        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
     }
 
     public CANCoder getCanCoder() {
@@ -63,4 +67,14 @@ public class Modul {
     public void setMove(TalonFX move) {
         this.move = move;
     }
+
+    public double get_velocity() {
+       return Helper.pulses_per_01second_to_meter_per_second(move.getSelectedSensorVelocity());
+    }
+
+    public SwerveModuleState getState(){
+        //TODO
+        return new SwerveModuleState();
+    }
+
 }

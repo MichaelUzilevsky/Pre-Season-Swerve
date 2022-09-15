@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -18,35 +20,42 @@ package frc.robot;
  */
 public final class Constants {
   
-    public final static int TOP_LEFT_MOVE = -1; 
-    public final static int TOP_LEFT_TURN = -1;
-    public final static int TOP_LEFT_CODER = -1;
+    public static final int GYRO = -1;
 
-    public final static int FRONT_LEFT_MOVE = -1;
-    public final static int FRONT_LEFT_TURN = -1;
-    public final static int FRONT_LEFT_CODER = -1;
+    public static final int TOP_LEFT_MOVE = -1; 
+    public static final int TOP_LEFT_TURN = -1;
+    public static final int TOP_LEFT_CODER = -1;
 
-    public final static int FRONT_RIGHT_MOVE = -1;
-    public final static int FRONT_RIGHT_TURN = -1;
-    public final static int FRONT_RIGHT_CODER = -1;
+    public static final int FRONT_LEFT_MOVE = -1;
+    public static final int FRONT_LEFT_TURN = -1;
+    public static final int FRONT_LEFT_CODER = -1;
 
-    public final static int BACK_LEFT_MOVE = -1;
-    public final static int BACK_LEFT_TURN = -1;
-    public final static int BACK_LEFT_CODER = -1;
+    public static final int FRONT_RIGHT_MOVE = -1;
+    public static final int FRONT_RIGHT_TURN = -1;
+    public static final int FRONT_RIGHT_CODER = -1;
 
-    public final static int BACK_RIGHT_MOVE = -1;
-    public final static int BACK_RIGHT_TURN = -1;
-    public final static int BACK_RIGHT_CODER = -1;
-    // public static final int BACK_RIGHT_TURN = 0;
+    public static final int BACK_LEFT_MOVE = -1;
+    public static final int BACK_LEFT_TURN = -1;
+    public static final int BACK_LEFT_CODER = -1;
 
+    public static final int BACK_RIGHT_MOVE = -1;
+    public static final int BACK_RIGHT_TURN = -1;
+    public static final int BACK_RIGHT_CODER = -1;
+    
+    public static final double STARTING_POSITION_X = 0;
+    public static final double STARTING_POSITION_Y = 0;
+    public static final double STARTING_ANGLE = 0;
+    
     // Locations for the swerve drive modules relative to the robot center.
-    public final static int FRONT_RIGHT_LOCATION_X = 0;
-    public final static int FRONT_RIGHT_LOCATION_Y = 0;
-    public final static int FRONT_LEFT_LOCATION_X = 0;
-    public final static int FRONT_LEFT_LOCATION_Y = 0;
-    public final static int BACK_LEFT_LOCATION_X = 0;
-    public final static int BACK_LEFT_LOCATION_Y = 0;
-    public final static int BACK_RIGHT_LOCATION_X = 0;
-    public final static int BACK_RIGHT_LOCATION_Y = 0;
+    public static final double FRONT_RIGHT_LOCATION_X = 0;
+    public static final double FRONT_RIGHT_LOCATION_Y = 0;
+    public static final double FRONT_LEFT_LOCATION_X = 0;
+    public static final double FRONT_LEFT_LOCATION_Y = 0;
+    public static final double BACK_LEFT_LOCATION_X = 0;
+    public static final double BACK_LEFT_LOCATION_Y = 0;
+    public static final double BACK_RIGHT_LOCATION_X = 0;
+    public static final double BACK_RIGHT_LOCATION_Y = 0;
+
+    public static final double PULSES_PER_METER = -1;
 
 }
