@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 
 public class Module {
@@ -37,11 +36,12 @@ public class Module {
                 break;
 
         }
+        
         setMove(new TalonFX(move_id));
         setTurn(new TalonFX(turn_id));
         setCanCoder(new CANCoder(canCoder_id));
 
-        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
     }
 
     public CANCoder getCanCoder() {
@@ -68,13 +68,13 @@ public class Module {
         this.move = move;
     }
 
+    //meter per second
     public double get_velocity() {
        return Helper.pulses_per_01second_to_meter_per_second(move.getSelectedSensorVelocity());
     }
 
-    public SwerveModuleState getState(){
-        //TODO
-        return new SwerveModuleState();
+    public void setEncoderToAbs(){
+        this.canCoder.setPositionToAbsolute();
     }
 
 }

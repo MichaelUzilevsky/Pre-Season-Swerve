@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean

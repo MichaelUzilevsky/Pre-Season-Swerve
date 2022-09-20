@@ -6,12 +6,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,14 +22,9 @@ public class Chassis extends SubsystemBase {
   private final Translation2d front_left_location, front_right_location, back_left_location , back_right_location;
   private final Module[] modules;
   private final SwerveDriveKinematics kinematics;
-  private final SwerveDriveOdometry odometry;
   private final PigeonIMU gyro;
-  private Pose2d robot_current_position;
   /** Creates a new Chassis. */
   public Chassis() {
-
-    robot_current_position = new Pose2d(new Translation2d(Constants.STARTING_POSITION_X, Constants.STARTING_POSITION_Y), 
-        new Rotation2d(Constants.STARTING_ANGLE));
 
     this.gyro = new PigeonIMU(Constants.GYRO);
 
@@ -49,8 +42,6 @@ public class Chassis extends SubsystemBase {
 
     kinematics = new SwerveDriveKinematics(front_left_location, front_right_location, back_left_location, back_right_location);
 
-    odometry = new SwerveDriveOdometry(kinematics,getHeading(), robot_current_position);
-
     modules = new Module[4];
     modules[0] = front_left;
     modules[1] = front_right;
@@ -63,7 +54,6 @@ public class Chassis extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //TODO
     // This method will be called once per scheduler run
     
     //robot_current_position =  odometry.update(();
