@@ -19,29 +19,30 @@ public class Module {
                 turn_id = Constants.FRONT_LEFT_TURN;
                 canCoder_id = Constants.FRONT_LEFT_CODER;
                 break;
+
             case FRONT_RIGHT:
                 move_id = Constants.FRONT_RIGHT_MOVE;
                 turn_id = Constants.FRONT_RIGHT_TURN;
                 canCoder_id = Constants.FRONT_RIGHT_CODER;
                 break;
+
             case BACK_RIGHT:
                 move_id = Constants.BACK_RIGHT_MOVE;
                 turn_id = Constants.BACK_RIGHT_TURN;
                 canCoder_id = Constants.BACK_RIGHT_CODER;
                 break;
+
             case BACK_LEFT:
                 move_id = Constants.BACK_LEFT_MOVE;
                 turn_id = Constants.BACK_LEFT_TURN;
                 canCoder_id = Constants.BACK_LEFT_CODER;
                 break;
-
         }
         
         setMove(new TalonFX(move_id));
         setTurn(new TalonFX(turn_id));
         setCanCoder(new CANCoder(canCoder_id));
-
-        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+        config_CANEncoder();
     }
 
     public CANCoder getCanCoder() {
@@ -73,8 +74,9 @@ public class Module {
        return Helper.pulses_per_01second_to_meter_per_second(move.getSelectedSensorVelocity());
     }
 
-    public void setEncoderToAbs(){
+    public void config_CANEncoder(){
         this.canCoder.setPositionToAbsolute();
+        this.canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
     }
 
 }
