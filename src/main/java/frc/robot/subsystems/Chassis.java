@@ -9,12 +9,11 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import utils.Module;
-import utils.Side;
+import utils.SwerveMudule;
 
 public class Chassis extends SubsystemBase {
 
-  private final Module front_right, back_right, front_left, back_left;
+  private final SwerveMudule front_right, back_right, front_left, back_left;
   private final SwerveDriveKinematics kinematics;
   private final PigeonIMU gyro;
 
@@ -23,10 +22,10 @@ public class Chassis extends SubsystemBase {
     this.gyro = new PigeonIMU(Constants.GYRO);
 
     //define moduls
-    this.front_right = new Module(Side.FRONT_RIGHT);
-    this.back_right = new Module(Side.BACK_RIGHT);
-    this.front_left = new Module(Side.FRONT_LEFT);
-    this.back_left = new Module(Side.BACK_LEFT);
+    this.front_right = new SwerveMudule(Constants.FRONT_RIGHT_MOVE, Constants.FRONT_RIGHT_TURN, Constants.FRONT_RIGHT_CODER);
+    this.back_right = new SwerveMudule(Constants.BACK_RIGHT_MOVE, Constants.BACK_RIGHT_TURN, Constants.BACK_RIGHT_CODER);
+    this.front_left = new SwerveMudule(Constants.FRONT_LEFT_MOVE, Constants.FRONT_LEFT_TURN, Constants.FRONT_LEFT_CODER);
+    this.back_left = new SwerveMudule(Constants.BACK_LEFT_MOVE, Constants.BACK_LEFT_TURN, Constants.BACK_LEFT_CODER);
 
     kinematics = new SwerveDriveKinematics(Constants.FRONT_LEFT_LOCATION, 
                                            Constants.FRONT_RIGHT_LOCATION, 
