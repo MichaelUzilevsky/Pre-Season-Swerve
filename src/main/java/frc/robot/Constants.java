@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -22,9 +23,9 @@ public final class Constants {
   
     public static final int GYRO = -1;
 
-    public static final int TOP_LEFT_MOVE = -1; 
-    public static final int TOP_LEFT_TURN = -1;
-    public static final int TOP_LEFT_CODER = -1;
+    public static final int TOP_LEFT_MOVE_MOTOR_ID = -1; 
+    public static final int TOP_LEFT_TURN_MOTOR_ID = -1;
+    public static final int TOP_LEFT_ANGLE_ENCODER_ID = -1;
 
     public static final int FRONT_LEFT_MOVE = -1;
     public static final int FRONT_LEFT_TURN = -1;
@@ -62,6 +63,16 @@ public final class Constants {
     public static final Translation2d FRONT_RIGHT_LOCATION  = new Translation2d(FRONT_RIGHT_LOCATION_X, FRONT_RIGHT_LOCATION_Y);
     public static final Translation2d BACK_RIGHT_LOCATION  = new Translation2d(BACK_RIGHT_LOCATION_X, BACK_RIGHT_LOCATION_Y);
 
-    public static final double PULSES_PER_METER = -1;
+    public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(Constants.FRONT_LEFT_LOCATION, 
+    Constants.FRONT_RIGHT_LOCATION, 
+    Constants.BACK_LEFT_LOCATION, 
+    Constants.BACK_RIGHT_LOCATION);
+    public static final double MAX_SPEED = 3;
 
+
+    public static final double PULSES_PER_METER = -1;
+    
+    //joysticks
+    public static final int SPEED_CONTROLLER_PORT = 1;
+    public static final int STEER_CONTROLLER_PORT = 2;
 }
