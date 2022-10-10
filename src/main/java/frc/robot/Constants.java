@@ -57,6 +57,7 @@ public final class Constants {
     public static final double BACK_RIGHT_LOCATION_X = 0;
     public static final double BACK_RIGHT_LOCATION_Y = 0;
 
+
     // define modules location
     public static final Translation2d FRONT_LEFT_LOCATION = new Translation2d(FRONT_LEFT_LOCATION_X,
             FRONT_LEFT_LOCATION_Y);
@@ -72,6 +73,9 @@ public final class Constants {
             Constants.FRONT_RIGHT_LOCATION,
             Constants.BACK_LEFT_LOCATION,
             Constants.BACK_RIGHT_LOCATION);
+
+    public static final double LEFT_RIGHT_WHEEL_DISTANCE_METER = 2;
+    
     public static final double MAX_SPEED = 3;
 
     public static final double PULSES_PER_METER = -1;
@@ -79,4 +83,7 @@ public final class Constants {
     // joysticks
     public static final int SPEED_CONTROLLER_PORT = 1;
     public static final int STEER_CONTROLLER_PORT = 2;
+
+
+
 }

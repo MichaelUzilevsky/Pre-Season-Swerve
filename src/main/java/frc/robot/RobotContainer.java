@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -22,13 +23,7 @@ import frc.robot.subsystems.Chassis;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  
-  private Chassis chassis;
-  private Joystick speed_controller;
-  private Joystick steer_controller;
-  private int motor_id;
 
-  private DriveWithController driveWithController;
 
   // The robot's subsystems and commands are defined here...
 
@@ -38,13 +33,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    this.chassis = chassis;
-    this.speed_controller = speed_controller;
-    this.steer_controller = steer_controller;
-    this.motor_id = chassis.get_motor_id();
-    this.driveWithController = new DriveWithController(chassis, speed_controller, steer_controller, motor_id);
 
-    chassis.setDefaultCommand(driveWithController);
     // Configure the button bindings
     configureButtonBindings();
   }
