@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
+import javax.swing.text.AbstractDocument.LeafElement;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -17,9 +20,10 @@ public class Chassis extends SubsystemBase {
   private final SwerveMudule[] swerveModules;
   private final SwerveMudule front_right, back_right, front_left, back_left;
   private final PigeonIMU gyro;
+  private final CANCoder canCoder1;
 
   public Chassis() {
-
+    this.canCoder1 = new CANCoder(2);
     this.gyro = new PigeonIMU(Constants.GYRO);
 
     // define moduls
@@ -37,59 +41,70 @@ public class Chassis extends SubsystemBase {
 
   }
 
-  @Override
+  // @Override
   // not my code
 
-  public void drive(double x, double y, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+  // public void drive(double x, double y, double rotation, boolean fieldRelative,
+  // boolean isOpenLoop) {
 
-    Translation2d translation = new Translation2d(y, -x); // Converting to X front positive and Y left positive
-    rotation *= -1; // Converting to CCW+
-    // set the desired states based on the given translation and rotation
-    SwerveModuleState[] swerveModuleStates = Constants.SWERVE_KINEMATICS.toSwerveModuleStates(
-        fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds( // if field relative, convert to field relative speeds
-            translation.getX(),
-            translation.getY(),
-            rotation,
-            getAngle())
-            : new ChassisSpeeds( // if not field relative, just use the given translation and rotation
-                translation.getX(),
-                translation.getY(),
-                rotation));
+  // Translation2d translation = new Translation2d(y, -x); // Converting to X
+  // front positive and Y left positive
+  // rotation *= -1; // Converting to CCW+
+  // // set the desired states based on the given translation and rotation
+  // SwerveModuleState[] swerveModuleStates =
+  // Constants.SWERVE_KINEMATICS.toSwerveModuleStates(
+  // fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds( // if field relative,
+  // convert to field relative speeds
+  // translation.getX(),
+  // translation.getY(),
+  // rotation,
+  // getAngle())
+  // : new ChassisSpeeds( // if not field relative, just use the given translation
+  // and rotation
+  // translation.getX(),
+  // translation.getY(),
+  // rotation));
 
-    // making sure the speeds are within the max speed
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.MAX_SPEED);
-    // if we are not moving or rotating at all, set the desired angle to the current
-    // angle
-    if (translation.getNorm() == 0 && rotation == 0) {
-      for (int i = 0; i < swerveModules.length; i++) {
-        swerveModuleStates[i].angle = swerveModules[i].getState().angle;
-      }
-    }
+  // // making sure the speeds are within the max speed
+  // SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,
+  // Constants.MAX_SPEED);
+  // // if we are not moving or rotating at all, set the desired angle to the
+  // current
+  // // angle
+  // if (translation.getNorm() == 0 && rotation == 0) {
+  // for (int i = 0; i < swerveModules.length; i++) {
+  // swerveModuleStates[i].angle = swerveModules[i].getState().angle;
+  // }
+  // }
 
-    // set the desired state for each module
-    for (int i = 0; i < swerveModules.length; i++) {
-      swerveModules[i].setDesiredState(swerveModuleStates[i], isOpenLoop, false);
-    }
-  }
+  // // set the desired state for each module
+  // for (int i = 0; i < swerveModules.length; i++) {
+  // swerveModules[i].setDesiredState(swerveModuleStates[i], isOpenLoop, false);
+  // }
+  // }
 
-  public SwerveModuleState[] getStates() {
-    SwerveModuleState[] states = new SwerveModuleState[4];
-    for (int i = 0; i < swerveModules.length; i++) {
-      states[i] = swerveModules[i].getState();
-    }
-    return states;
-  }
+  // public SwerveModuleState[] getStates() {
+  // SwerveModuleState[] states = new SwerveModuleState[4];
+  // for (int i = 0; i < swerveModules.length; i++) {
+  // states[i] = swerveModules[i].getState();
+  // }
+  // return states;
+  // }
 
-  public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_SPEED);
+  // public void setModuleStates(SwerveModuleState[] desiredStates) {
+  // SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,
+  // Constants.MAX_SPEED);
 
-    for (int i = 0; i < swerveModules.length; i++) {
-      swerveModules[i].setDesiredState(desiredStates[i], true, false);
-    }
-  }
-
+  // for (int i = 0; i < swerveModules.length; i++) {
+  // swerveModules[i].setDesiredState(desiredStates[i], true, false);
+  // }
+  // }
 
   // my code :D
+  public double get_angle_cancoder() {
+    return front_right.getEncouder().getAbsolutePosition();
+  }
+
   public void set_power(double power) {
     front_left.getMove_motor().set(ControlMode.PercentOutput, power);
   }
@@ -104,6 +119,7 @@ public class Chassis extends SubsystemBase {
 
   public void periodic() {
     SmartDashboard.getNumber("motor port to check", 0);
+    SmartDashboard.putNumber("absolute position cancoder", get_angle_cancoder());
     // This method will be called once per scheduler run
   }
 }
