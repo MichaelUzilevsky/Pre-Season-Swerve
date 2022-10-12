@@ -15,7 +15,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,7 +28,6 @@ public class Chassis extends SubsystemBase {
   private final SwerveMudule front_right, back_right, front_left, back_left;
 
   private final PigeonIMU gyro;
-
   private DifferentialDriveOdometry odometry;
 
   private DifferentialDriveKinematics kinematics;
@@ -34,9 +35,8 @@ public class Chassis extends SubsystemBase {
 
   public Chassis() {
     this.gyro = new PigeonIMU(Constants.GYRO);
-
     // odometry
-    odometry = new DifferentialDriveOdometry(getGyroHeading(), new Pose2d(0, 0,  new Rotation2d(0)));
+    odometry = new DifferentialDriveOdometry(getGyroHeading(), new Pose2d(5.0, 13.5,  new Rotation2d())); // check what pose i should give here and what ratation2d
     // odometry.update
 
     // kinematic
@@ -53,7 +53,6 @@ public class Chassis extends SubsystemBase {
     swerveModules[1] = front_left;
     swerveModules[2] = back_right;
     swerveModules[3] = back_left;
-
   }
 
   /**
@@ -87,26 +86,29 @@ public class Chassis extends SubsystemBase {
     return new ChassisSpeeds(vxMPR,vyMPR,angularVelocity);
   }
 
-
-  public double getGyroHeading(){
+  public double getangle(){
     return gyro.getFusedHeading();
   }
 
-  public double get_angle_cancoder() {
-    return front_right.getEncouder().getAbsolutePosition();
-  }
 
 
-  public Rotation2d getHeading() {
+
+  public Rotation2d getGyroHeading() {
     return Rotation2d.fromDegrees(-gyro.getFusedHeading());
   }
 
-  public int get_motor_id() {
-    return (int) SmartDashboard.getNumber("motor port to check", 0);
+  public void updateOdometry() {
+    odometry.update(getGyroHeading(), front_left.getMove_motor().getSelectedSensorPosition(), front_right.getMove_motor().getSelectedSensorPosition());
   }
 
   public void periodic() {
-    SmartDashboard.getNumber("motor port to check", 0);
+    // need to check how to make the odomentry
+    //1. getPose()
+    //2. odometry check if inzilazied right
+    Field2d field2d = new Field2d();
+    Pose2d pose = odometry.update(getGyroHeading(), front_left.getMove_motor().getSelectedSensorPosition(), front_right.getMove_motor().getSelectedSensorPosition());
+    field2d.getRobotPose();
+    SmartDashboard.putData("Robot position", );
     // This method will be called once per scheduler run
   }
 }
