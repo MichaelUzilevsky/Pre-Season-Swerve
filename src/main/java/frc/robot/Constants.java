@@ -23,25 +23,21 @@ public final class Constants {
 
     public static final int GYRO = -1;
 
-    public static final int TOP_LEFT_MOVE_MOTOR_ID = -1;
-    public static final int TOP_LEFT_TURN_MOTOR_ID = -1;
-    public static final int TOP_LEFT_ANGLE_ENCODER_ID = -1;
+    public static final int FRONT_LEFT_MOVE_MOTOR_ID = -1;
+    public static final int FRONT_LEFT_TURN_MOTOR_ID = -1;
+    public static final int FRONT_LEFT_CODER_ID = -1;
 
-    public static final int FRONT_LEFT_MOVE = -1;
-    public static final int FRONT_LEFT_TURN = -1;
-    public static final int FRONT_LEFT_CODER = -1;
+    public static final int FRONT_RIGHT_MOVE_MOTOR_ID = 5;
+    public static final int FRONT_RIGHT_TURN_MOTOR_ID = 1;
+    public static final int FRONT_RIGHT_CODER_ID = 0;
 
-    public static final int FRONT_RIGHT_MOVE = 5;
-    public static final int FRONT_RIGHT_TURN = 1;
-    public static final int FRONT_RIGHT_CODER = 0;
+    public static final int BACK_LEFT_MOVE_MOTOR_ID = -1;
+    public static final int BACK_LEFT_TURN_MOTOR_ID = -1;
+    public static final int BACK_LEFT_CODER_ID = -1;
 
-    public static final int BACK_LEFT_MOVE = -1;
-    public static final int BACK_LEFT_TURN = -1;
-    public static final int BACK_LEFT_CODER = -1;
-
-    public static final int BACK_RIGHT_MOVE = -1;
-    public static final int BACK_RIGHT_TURN = -1;
-    public static final int BACK_RIGHT_CODER = -1;
+    public static final int BACK_RIGHT_MOVE_MOTOR_ID = -1;
+    public static final int BACK_RIGHT_TURN_MOTOR_ID = -1;
+    public static final int BACK_RIGHT_CODER_ID = -1;
 
     public static final double STARTING_POSITION_X = 0;
     public static final double STARTING_POSITION_Y = 0;
