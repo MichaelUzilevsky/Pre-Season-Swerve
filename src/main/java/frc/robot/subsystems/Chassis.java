@@ -14,6 +14,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -21,33 +22,30 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import utils.SwerveMudule;
+import utils.SwerveModule;
 
 public class Chassis extends SubsystemBase {
-  private final SwerveMudule[] swerveModules;
-  private final SwerveMudule front_right, back_right, front_left, back_left;
+  private final SwerveModule[] swerveModules;
+  private final SwerveModule front_right, back_right, front_left, back_left;
 
   private final PigeonIMU gyro;
-  private DifferentialDriveOdometry odometry;
-
-  private DifferentialDriveKinematics kinematics;
-  private DifferentialDriveWheelSpeeds wspeed;
+  private SwerveDriveOdometry odometry;
 
   public Chassis() {
     this.gyro = new PigeonIMU(Constants.GYRO);
     // odometry
-    odometry = new DifferentialDriveOdometry(getGyroHeading(), new Pose2d(5.0, 13.5,  new Rotation2d())); // check what pose i should give here and what ratation2d
-    // odometry.update
-
-    // kinematic
-    kinematics = new DifferentialDriveKinematics(Constants.LEFT_RIGHT_WHEEL_DISTANCE_METER);
+    odometry = new SwerveDriveOdometry(Constants.SWERVE_KINEMATICS, getGyroHeading());
 
     // define moduls
-    swerveModules = new SwerveMudule[4];
-    front_right = new SwerveMudule(Constants.FRONT_RIGHT_MOVE, Constants.FRONT_RIGHT_TURN, Constants.FRONT_RIGHT_CODER);
-    back_right = new SwerveMudule(Constants.BACK_RIGHT_MOVE, Constants.BACK_RIGHT_TURN, Constants.BACK_RIGHT_CODER);
-    front_left = new SwerveMudule(Constants.FRONT_LEFT_MOVE, Constants.FRONT_LEFT_TURN, Constants.FRONT_LEFT_CODER);
-    back_left = new SwerveMudule(Constants.BACK_LEFT_MOVE, Constants.BACK_LEFT_TURN, Constants.BACK_LEFT_CODER);
+    swerveModules = new SwerveModule[4];
+    front_right = new SwerveModule(Constants.FRONT_RIGHT_MOVE_MOTOR_ID, Constants.FRONT_RIGHT_TURN_MOTOR_ID,
+        Constants.FRONT_RIGHT_CODER_ID);
+    back_right = new SwerveModule(Constants.BACK_RIGHT_MOVE_MOTOR_ID, Constants.BACK_RIGHT_TURN_MOTOR_ID,
+        Constants.BACK_RIGHT_CODER_ID);
+    front_left = new SwerveModule(Constants.FRONT_LEFT_MOVE_MOTOR_ID, Constants.FRONT_LEFT_TURN_MOTOR_ID,
+        Constants.FRONT_LEFT_CODER_ID);
+    back_left = new SwerveModule(Constants.BACK_LEFT_MOVE_MOTOR_ID, Constants.BACK_LEFT_TURN_MOTOR_ID,
+        Constants.BACK_LEFT_CODER_ID);
 
     swerveModules[0] = front_right;
     swerveModules[1] = front_left;
@@ -61,54 +59,35 @@ public class Chassis extends SubsystemBase {
    * @param angularVelocity  radians
    */
   public void drive(double fowardVelocity, double sidewaysVelocity, double angularVelocity) {
-    wspeed = kinematics.toWheelSpeeds(new ChassisSpeeds(fowardVelocity, 0, angularVelocity));
-    ChassisSpeeds chassisSpeeds = kinematics.toChassisSpeeds(wspeed);
+    var speeds = Constants.SWERVE_KINEMATICS.toSwerveModuleStates(
+        ChassisSpeeds.fromFieldRelativeSpeeds(fowardVelocity, sidewaysVelocity, angularVelocity, getGyroHeading()));
 
-    // Linear velocity
-    double linearVelocity = chassisSpeeds.vxMetersPerSecond;
-    
-    // Angular velocity
-    double angularVelocity2 = chassisSpeeds.omegaRadiansPerSecond;
-    
-    setVelocity(linearVelocity , sidewaysVelocity , angularVelocity2);
-    
-
-    // ChassisSpeeds speed = new ChassisSpeeds(fowardVelocity, sidewaysVelocity,
-    // angularVelocity);
+    ChassisSpeeds chassisSpeeds = Constants.SWERVE_KINEMATICS.toChassisSpeeds(speeds);
     for (int i = 0; i < swerveModules.length; i++) {
+      swerveModules[i].setVelocityMove(speeds[i].speedMetersPerSecond);
+      swerveModules[i].setPosition(speeds[i].angle);
 
     }
 
   }
 
-  public ChassisSpeeds setVelocity(Double vxMPR , Double vyMPR, Double angularVelocity){
-    // ChassisSpeeds speed  = new ChassisSpeeds(vxMPR,vyMPR,angularVelocity);
-    return new ChassisSpeeds(vxMPR,vyMPR,angularVelocity);
-  }
-
-  public double getangle(){
+  public double getangle() {
     return gyro.getFusedHeading();
   }
 
-
-
-
   public Rotation2d getGyroHeading() {
-    return Rotation2d.fromDegrees(-gyro.getFusedHeading());
-  }
 
-  public void updateOdometry() {
-    odometry.update(getGyroHeading(), front_left.getMove_motor().getSelectedSensorPosition(), front_right.getMove_motor().getSelectedSensorPosition());
+    return Rotation2d.fromDegrees(-gyro.getFusedHeading());
   }
 
   public void periodic() {
     // need to check how to make the odomentry
-    //1. getPose()
-    //2. odometry check if inzilazied right
+    // 1. getPose()
+    // 2. odometry check if inzilazied right
     Field2d field2d = new Field2d();
-    Pose2d pose = odometry.update(getGyroHeading(), front_left.getMove_motor().getSelectedSensorPosition(), front_right.getMove_motor().getSelectedSensorPosition());
     field2d.getRobotPose();
-    SmartDashboard.putData("Robot position", );
+    SmartDashboard.putData("Robot position", field2d);
+    SmartDashboard.putNumber("AbsolutePosition", front_left.getAbsolutePosition());
     // This method will be called once per scheduler run
   }
 }
