@@ -23,13 +23,13 @@ public final class Constants {
 
         public static final int GYRO = -1;
 
-        public static final int FRONT_LEFT_MOVE_MOTOR_ID = -1;
-        public static final int FRONT_LEFT_TURN_MOTOR_ID = -1;
-        public static final int FRONT_LEFT_CODER_ID = -1;
+        public static final int FRONT_LEFT_MOVE_MOTOR_ID = 2;
+        public static final int FRONT_LEFT_TURN_MOTOR_ID = 1;
+        public static final int FRONT_LEFT_CODER_ID = 11;
 
-        public static final int FRONT_RIGHT_MOVE_MOTOR_ID = 5;
-        public static final int FRONT_RIGHT_TURN_MOTOR_ID = 1;
-        public static final int FRONT_RIGHT_CODER_ID = 0;
+        public static final int FRONT_RIGHT_MOVE_MOTOR_ID = -1;
+        public static final int FRONT_RIGHT_TURN_MOTOR_ID = -1;
+        public static final int FRONT_RIGHT_CODER_ID = -1;
 
         public static final int BACK_LEFT_MOVE_MOTOR_ID = -1;
         public static final int BACK_LEFT_TURN_MOTOR_ID = -1;
@@ -79,8 +79,12 @@ public final class Constants {
         public static final int SPEED_CONTROLLER_PORT = 1;
         public static final int STEER_CONTROLLER_PORT = 2;
 
-        public static final double FF = -1;
-        public static final double ks = -1;
-        public static final double Kv = 0;
+        public static final double moveFF = -1;
+        public static final double moveKs = -1;
+        public static final double moveKv = 0;
+
+        public static final double steerFF = -1;
+        public static final double steerKs = -1;
+        public static final double steerKv = 0;
 
 }

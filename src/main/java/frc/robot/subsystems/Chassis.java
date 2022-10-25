@@ -64,8 +64,8 @@ public class Chassis extends SubsystemBase {
 
     ChassisSpeeds chassisSpeeds = Constants.SWERVE_KINEMATICS.toChassisSpeeds(speeds);
     for (int i = 0; i < swerveModules.length; i++) {
-      swerveModules[i].setVelocityMove(speeds[i].speedMetersPerSecond);
-      swerveModules[i].setPosition(speeds[i].angle);
+      var yoav = SwerveModuleState.optimize(speeds[i], getGyroHeading());
+      swerveModules[i].setMoveVelocity(speeds[i].speedMetersPerSecond);
 
     }
 
@@ -76,7 +76,6 @@ public class Chassis extends SubsystemBase {
   }
 
   public Rotation2d getGyroHeading() {
-
     return Rotation2d.fromDegrees(-gyro.getFusedHeading());
   }
 
@@ -87,7 +86,7 @@ public class Chassis extends SubsystemBase {
     Field2d field2d = new Field2d();
     field2d.getRobotPose();
     SmartDashboard.putData("Robot position", field2d);
-    SmartDashboard.putNumber("AbsolutePosition", front_left.getAbsolutePosition());
+    SmartDashboard.putNumber("AbsolutePosition", front_left.getAbsolutePositionCANCoder());
     // This method will be called once per scheduler run
   }
 }

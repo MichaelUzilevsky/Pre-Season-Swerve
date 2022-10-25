@@ -52,17 +52,21 @@ public class SwerveModule {
         this.encouder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
     }
 
-    public double getFF(double x) {
-        return Constants.ks * Math.signum(x) + x * Constants.Kv;
+    public double getMoveFF(double x) {
+        return Constants.moveKs * Math.signum(x) + x * Constants.moveKv;
     }
 
-    public void setVelocityMove(double velocity) {
+    public void setMoveVelocity(double velocity) {
         moveMotor.set(ControlMode.Velocity, meterPerSecondToPulses(velocity), DemandType.ArbitraryFeedForward,
-                getFF(velocity));
+                getMoveFF(velocity));
     }
 
-    public void setPosition(Rotation2d angle) {
-        steerMotor.set 
-        encouder.setPosition(angle);
+    public void setSteerAngle(double angle) {
+        steerMotor.set(ControlMode.Position, steerMotor.getSelectedSensorPosition() + angle);
     }
+
+    public double getAbsolutePositionCANCoder() {
+        return encouder.getAbsolutePosition();
+    }
+
 }
